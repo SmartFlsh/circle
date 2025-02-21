@@ -67,20 +67,20 @@ main{
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-}
 
-.circle {
-  position: relative;
-  width: 15vw;
-  height: 15vw;
-  border-radius: 50%;
-  border: 2px solid #000;
-}
-
-.point {
-  position: absolute;
-  width: 10px;
-  height: 10px;
-  background-color: red;
-  border-radius: 50%;
+  .circle {
+    position: relative;
+    width: 15vw;
+    height: 15vw;
+    border-radius: 50%;
+    border: 2px solid #000;
+  }
+  
+  .point {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background-color: red;
+    border-radius: 50%;
+  }
 }

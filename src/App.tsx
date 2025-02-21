@@ -1,4 +1,4 @@
-import Test from './test/test'
+import Test from './Cirlce/Circle'
 
 function App() {
   return (
