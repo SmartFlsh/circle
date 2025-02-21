@@ -2,10 +2,13 @@ import { useEffect, useState } from 'react';
 import Circle from './Module/Circle'
 import SwiperComponent from './Module/SwiperModule'
 import DATA from '../info.json'
+import { gsap } from "gsap";
 
 
 function App() {
   const [activePoint, setActivePoint] = useState<number>(0)
+  const [minValue, setMinValue] = useState(0)
+  const [maxValue, setMaxValue] = useState(0)
 
   const changeActivePoint = (value: number)=>{
     if(value + activePoint >= 6){
@@ -15,12 +18,27 @@ function App() {
     }else{
       setActivePoint(ev=>ev + value)
     }
-    
   }
 
   useEffect(()=>{
-    console.log(DATA)
-  }, [])
+    const dataArray = Object.keys(DATA[activePoint].date).map(key => Number(key))
+    gsap.to({value: minValue}, {
+      value: Math.min(...dataArray),
+      duration: 1.5,
+      ease: "power1.out",
+      onUpdate: function(){
+        setMinValue(Math.round(this.targets()[0].value))
+      }
+    })
+    gsap.to({value: maxValue}, {
+      value: Math.max(...dataArray),
+      duration: 1.5,
+      ease: "power1.out",
+      onUpdate: function(){
+        setMaxValue(Math.round(this.targets()[0].value))
+      }
+    })
+  }, [activePoint])
 
   return (
     <main>
@@ -30,17 +48,21 @@ function App() {
         </section>
 
         <section className='data'>
-          <div>2017</div>
-          <div>2020</div>
+          <div>{minValue}</div>
+          <div>{maxValue}</div>
           <Circle activePoint={[activePoint, setActivePoint]} data={DATA}/>
         </section>
 
         <section className="section scroll">
           <div>
-            <div>{activePoint + 1}/6</div>
-            <div>
-              <button onClick={()=>{changeActivePoint(-1)}}>left</button>
-              <button onClick={()=>{changeActivePoint(1)}}>rigth</button>
+            <div className='score'>0{activePoint + 1}/06</div>
+            <div className='mainArrowContainer'>
+              <div className='arrowContainer'>
+                <img style={{transform: 'rotate(90deg)'}} onClick={()=>{changeActivePoint(-1)}} className='arrow' src="/arrow.png" alt="" />
+              </div>
+              <div className='arrowContainer'>
+                <img style={{transform: 'rotate(-90deg)'}} onClick={()=>{changeActivePoint(1)}} className='arrow' src="/arrow.png" alt="" />
+              </div>
             </div>
           </div>
 

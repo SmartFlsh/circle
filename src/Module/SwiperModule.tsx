@@ -1,12 +1,13 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Pagination } from 'swiper/modules';
+import { useGSAP } from '@gsap/react';
+import { gsap } from "gsap";
 
 
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
-
 interface DateEntries {
   [year: string]: string | undefined;
 }
@@ -24,19 +25,36 @@ interface SwiperProps{
 }
 
 const SwiperModule: React.FC<SwiperProps> = ({data, activePoint}) => {
+  const [delay, setDelay] = useState(activePoint)
+  const SwiperRef = useRef(null)
+  useGSAP(()=>{
+    gsap.timeline().to(SwiperRef.current,{
+      opacity: 0,
+      duration: .5,
+      onComplete: ()=>{
+        setDelay(activePoint)
+      }
+    })
+    .to(SwiperRef.current,{
+      opacity: 1,
+      duration: .5
+    })
+  }, [activePoint])
+
   return (
     <Swiper
-      spaceBetween={50}
+    ref={SwiperRef}
+      spaceBetween={20}
       slidesPerView={3}
       navigation
       pagination={{ clickable: true }}
       modules={[Navigation, Pagination]}
     >
-      {Object.keys(data[activePoint].date).map((elem, index)=>(
+      {Object.keys(data[delay].date).map((elem, index)=>(
         <SwiperSlide key={index}>
-          <div style={{ padding: '20px', backgroundColor: '#f0f4ff', borderRadius: '8px' }}>
+          <div className='swiper'>
             <h3>{elem}</h3>
-            <p>{data[activePoint].date[elem]}</p>
+            <p>{data[delay].date[elem]}</p>
           </div>
         </SwiperSlide>
       ))}
