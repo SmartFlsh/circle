@@ -1,23 +1,34 @@
-import './App.css';
+import Test from './test/test'
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <main>
+      <div className='mainContainer'>
+        <section className='section historikData'>
+          <h1>Исторические даты</h1>
+        </section>
+
+        <section className='data'>
+          <div>2017</div>
+          <div>2020</div>
+          <Test/>
+        </section>
+
+        <section className="section scroll">
+          <div>
+            <div>0/6</div>
+            <div>
+              <button>left</button>
+              <button>rigth</button>
+            </div>
+          </div>
+
+          <div>
+            {/* map */}
+          </div>
+        </section>
+      </div>
+    </main>
   );
 }
 

@@ -29,6 +29,14 @@ module.exports = {
         use: ['style-loader', 'css-loader'],
       },
       {
+        test: /\.scss$/i,  // Добавляем поддержку SCSS
+        use: [
+          'style-loader',  // Вставляет стили в DOM
+          'css-loader',    // Интерпретирует CSS
+          'sass-loader',   // Преобразует SCSS в CSS
+        ],
+      },
+      {
         test: /\.(png|svg|jpg|jpeg|gif)$/i,
         type: 'asset/resource',
       },
