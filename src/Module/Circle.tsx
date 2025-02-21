@@ -17,11 +17,11 @@ type ScienceData = ScienceEntry[];
 interface CircleProps {
   activePoint: [number, React.Dispatch<React.SetStateAction<number>>];
   data: ScienceData;
+  numPoints: number;
 }
 
-const Circle: React.FC<CircleProps> = ({ activePoint, data }) => {
+const Circle: React.FC<CircleProps> = ({ activePoint, data, numPoints }) => {
   const [points, setPoints] = useState<React.ReactNode[]>([]); 
-  const [numPoints, setSumPoints] = useState<number>(6); 
   const [nowName, setNowName] = useState<string>('')
   const circleRef = useRef<HTMLDivElement | null>(null);
   const infoRef = useRef<HTMLDivElement | null>(null);
@@ -95,6 +95,7 @@ const Circle: React.FC<CircleProps> = ({ activePoint, data }) => {
           y={y}
           activePoint={activePoint}
           active={activePoint[0] === i}
+          numPoints={numPoints}
         />
       );
     }

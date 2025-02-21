@@ -8,6 +8,7 @@ interface PointProps {
   y: number;
   activePoint: [number, React.Dispatch<React.SetStateAction<number>>];
   active: boolean;
+  numPoints: number
 }
 
 const Point: React.FC<PointProps> = ({
@@ -17,6 +18,7 @@ const Point: React.FC<PointProps> = ({
   y,
   activePoint,
   active,
+  numPoints,
 }) => {
   const pointRef = useRef<HTMLDivElement | null>(null);
 
@@ -33,7 +35,7 @@ const Point: React.FC<PointProps> = ({
       ease: "power1.out",
     });
 
-    const rotate = activePoint[0] * 60;
+    const rotate = activePoint[0] * (360 / numPoints);
 
     if (active) {
       gsap
@@ -66,7 +68,7 @@ const Point: React.FC<PointProps> = ({
 
   const mouseEnter = () => {
     if (!pointRef.current) return;
-    const rotate = activePoint[0] * 60;
+    const rotate = activePoint[0] * (360 / numPoints);
     gsap
       .timeline()
       .to(pointRef.current.children[0], {
@@ -93,7 +95,7 @@ const Point: React.FC<PointProps> = ({
 
   const mouseLeave = () => {
     if (!pointRef.current || active) return;
-    const rotate = activePoint[0] * 60;
+    const rotate = activePoint[0] * (360 / numPoints);
     gsap
       .timeline()
       .to(pointRef.current.children[0], {

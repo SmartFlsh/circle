@@ -9,6 +9,7 @@ function App() {
   const [activePoint, setActivePoint] = useState<number>(0)
   const [minValue, setMinValue] = useState(0)
   const [maxValue, setMaxValue] = useState(0)
+  const [numPoints, setSumPoints] = useState<number>(6); 
 
   const changeActivePoint = (value: number)=>{
     if(value + activePoint >= 6){
@@ -50,7 +51,7 @@ function App() {
         <section className='data'>
           <div>{minValue}</div>
           <div>{maxValue}</div>
-          <Circle activePoint={[activePoint, setActivePoint]} data={DATA}/>
+          <Circle activePoint={[activePoint, setActivePoint]} data={DATA} numPoints={numPoints}/>
         </section>
 
         <section className="section scroll">
