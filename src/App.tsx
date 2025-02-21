@@ -1,5 +1,7 @@
-import { useState } from 'react';
-import Circle from './Cirlce/Circle'
+import { useEffect, useState } from 'react';
+import Circle from './Module/Circle'
+import SwiperComponent from './Module/SwiperModule'
+import DATA from '../info.json'
 
 
 function App() {
@@ -16,6 +18,10 @@ function App() {
     
   }
 
+  useEffect(()=>{
+    console.log(DATA)
+  }, [])
+
   return (
     <main>
       <div className='mainContainer'>
@@ -26,7 +32,7 @@ function App() {
         <section className='data'>
           <div>2017</div>
           <div>2020</div>
-          <Circle activePoint={[activePoint, setActivePoint]}/>
+          <Circle activePoint={[activePoint, setActivePoint]} data={DATA}/>
         </section>
 
         <section className="section scroll">
@@ -39,7 +45,7 @@ function App() {
           </div>
 
           <div>
-            {/* map */}
+            <SwiperComponent data={DATA} activePoint={activePoint}/>
           </div>
         </section>
       </div>

@@ -3,14 +3,28 @@ import { gsap } from "gsap";
 import { useGSAP } from "@gsap/react";
 import Point from "./Point";
 
-interface CircleProps {
-  activePoint: [number, React.Dispatch<React.SetStateAction<number>>];
+interface DateEntries {
+  [year: string]: string | undefined;
 }
 
-const Circle: React.FC<CircleProps> = ({ activePoint }) => {
-  const [points, setPoints] = useState<React.ReactNode[]>([]); // Состояние для точек
-  const [numPoints, setSumPoints] = useState<number>(6); // Номер активной точки
+interface ScienceEntry {
+  name: string;
+  date: DateEntries;
+}
+
+type ScienceData = ScienceEntry[];
+
+interface CircleProps {
+  activePoint: [number, React.Dispatch<React.SetStateAction<number>>];
+  data: ScienceData;
+}
+
+const Circle: React.FC<CircleProps> = ({ activePoint, data }) => {
+  const [points, setPoints] = useState<React.ReactNode[]>([]); 
+  const [numPoints, setSumPoints] = useState<number>(6); 
+  const [nowName, setNowName] = useState<string>('')
   const circleRef = useRef<HTMLDivElement | null>(null);
+  const infoRef = useRef<HTMLDivElement | null>(null);
 
   const pointSize = 10;
 
@@ -42,11 +56,25 @@ const Circle: React.FC<CircleProps> = ({ activePoint }) => {
   useEffect(()=>{
     const rotate = Math.abs((activePoint[0] - numPoints) * (360 / numPoints));
 
-    gsap.to(circleRef.current, {
+    gsap.to(infoRef.current,{
+      opacity: 0,
+      duration: .4,
+      ease: "power1.out",
+      onComplete: ()=>{
+        setNowName(data[activePoint[0]].name)
+      }
+    })
+
+    gsap.timeline().to(circleRef.current, {
       rotation: rotate,
       duration: 1,
       ease: "power1.out",
-    });
+    })
+    .to(infoRef.current,{
+      opacity: 1,
+      duration: .5,
+      ease: "power1.out",
+    })
   }, [activePoint[0]])
 
   const createPoints = (radius: number): React.ReactNode[] => {
@@ -54,7 +82,7 @@ const Circle: React.FC<CircleProps> = ({ activePoint }) => {
     console.log(radius);
 
     for (let i = 0; i < numPoints; i++) {
-      const angle = ((i - 1) * 360) / numPoints; // Сдвигаем индексы, чтобы 0 оказался сверху слева
+      const angle = ((i - 1) * 360) / numPoints; 
       const x = radius * Math.cos((angle * Math.PI) / 180);
       const y = radius * Math.sin((angle * Math.PI) / 180);
 
@@ -95,8 +123,8 @@ const Circle: React.FC<CircleProps> = ({ activePoint }) => {
         }}
       >
         {points}
-        <div className="info">test</div>
       </div>
+      <div className="info" ref={infoRef}>{nowName}</div>
     </div>
   );
 };

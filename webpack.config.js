@@ -29,11 +29,11 @@ module.exports = {
         use: ['style-loader', 'css-loader'],
       },
       {
-        test: /\.scss$/i,  // Добавляем поддержку SCSS
+        test: /\.scss$/i,  
         use: [
-          'style-loader',  // Вставляет стили в DOM
-          'css-loader',    // Интерпретирует CSS
-          'sass-loader',   // Преобразует SCSS в CSS
+          'style-loader',  
+          'css-loader',    
+          'sass-loader',   
         ],
       },
       {
