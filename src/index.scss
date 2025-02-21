@@ -25,11 +25,24 @@ main{
   .historikData {
     margin-top: 4%;
     width: 30%;
+
     h1{
       color: #42567A;
       font-size: 3vw;
       font-weight: 700;
       font-style: normal;
+      position: relative;
+    }
+
+    h1:before{
+      content: "";
+      position: absolute;
+      left: -20%; /* Граница слева */
+      top: 50%; /* Начало границы, смещаем на 25% от верха */
+      transform: translate(-50%, -50%);
+      height: 80%; /* Высота границы 50% */
+      width: 5px; /* Толщина границы */
+      background: linear-gradient(to bottom, blue, red); /* Градиент */
     }
   }
 
