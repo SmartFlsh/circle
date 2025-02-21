@@ -1,6 +1,21 @@
-import Test from './Cirlce/Circle'
+import { useState } from 'react';
+import Circle from './Cirlce/Circle'
+
 
 function App() {
+  const [activePoint, setActivePoint] = useState<number>(0)
+
+  const changeActivePoint = (value: number)=>{
+    if(value + activePoint >= 6){
+      setActivePoint(0)
+    }else if(value + activePoint < 0){
+      setActivePoint(5)
+    }else{
+      setActivePoint(ev=>ev + value)
+    }
+    
+  }
+
   return (
     <main>
       <div className='mainContainer'>
@@ -11,15 +26,15 @@ function App() {
         <section className='data'>
           <div>2017</div>
           <div>2020</div>
-          <Test/>
+          <Circle activePoint={[activePoint, setActivePoint]}/>
         </section>
 
         <section className="section scroll">
           <div>
-            <div>0/6</div>
+            <div>{activePoint + 1}/6</div>
             <div>
-              <button>left</button>
-              <button>rigth</button>
+              <button onClick={()=>{changeActivePoint(-1)}}>left</button>
+              <button onClick={()=>{changeActivePoint(1)}}>rigth</button>
             </div>
           </div>
 
