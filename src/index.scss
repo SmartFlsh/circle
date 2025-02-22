@@ -51,6 +51,7 @@ main{
     justify-content: center;
     gap: 10%;
     position: relative;
+    user-select: none;
 
     div{
       font-size: 10vw;
@@ -100,6 +101,7 @@ main{
 
           .test{
             position: absolute;
+            opacity: 0;
             right: -40px;
             transform: translate(50%, 0);
           }
@@ -148,6 +150,7 @@ main{
         align-items: center;
         cursor: pointer;
         transition: .5s;
+        user-select: none;
   
         .arrow{
           width: 20px;

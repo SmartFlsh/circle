@@ -56,7 +56,6 @@ const Circle: React.FC<CircleProps> = ({ activePoint, data, numPoints }) => {
 
   const createPoints = (radius: number): React.ReactNode[] => {
     const pointsArray = [];
-    console.log(radius);
 
     for (let i = 0; i < numPoints; i++) {
       const angle = ((i - 1) * 360) / numPoints; 

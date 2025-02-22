@@ -39,41 +39,37 @@ const Point: React.FC<PointProps> = ({
 
     const rotate = activePoint[0] * (360 / numPoints);
 
-    if (active) {
-      gsap.timeline()
-      .to(pointRef.current, {
-        rotate: rotate,
-        duration: 1,
-        ease: "power1.out",
-      })
-      .to(pointRef.current.children[1], {
-        opacity: 1,
-        duration: .3,
-        ease: "power1.out",
-      })
-      gsap.to(pointRef.current.children[0], {
-        opacity: active ? 1 : 0,
-        duration: 0.3,
-        ease: "power1.out",
-      });
-    } else {
+    gsap.to(pointRef.current, {
+      rotate: rotate,
+      duration: 1,
+      ease: "power1.out",
+      onComplete: ()=>{
+        gsap.to(pointRef.current!.children[1], {
+          opacity: active ? 1 : 0,
+          duration: .3,
+          ease: "power1.out",
+        })
+      },
+    })
+    gsap.to(pointRef.current.children[0], {
+      opacity: active ? 1 : 0,
+      duration: 0.3,
+      ease: "power1.out",
+    });
+    if (!active) {
       gsap.to(pointRef.current.children[0], {
         opacity: active ? 1 : 0,
         duration: 0.3,
         ease: "power1.out",
       });
       gsap.to(pointRef.current.children[1], {
-        opacity: 0,
+        opacity: active ? 1 : 0,
         duration: .3,
         ease: "power1.out",
       })
-      gsap.to(pointRef.current, {
-        rotate: rotate,
-        duration: 1,
-        ease: "power1.out",
-      });
+
     }
-  }, [activePoint[0]]);
+  }, [activePoint[0], active]);
 
   const mouseEnter = () => {
     if (!pointRef.current) return;
