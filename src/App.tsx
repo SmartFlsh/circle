@@ -24,7 +24,7 @@ const App: FC<AppProps> = ({ numberPoint, DATA }) => {
   const [minValue, setMinValue] = useState(0);
   const [maxValue, setMaxValue] = useState(0);
   const [numPoints, setSumPoints] = useState<number>(
-    numberPoint > 0 ? numberPoint : 6
+    numberPoint >= 2 && numberPoint <= 6? numberPoint : 6
   );
   const [isMobile, setIsMobile] = useState(false);
 
