@@ -42,23 +42,38 @@ const SwiperModule: React.FC<SwiperProps> = ({data, activePoint}) => {
   }, [activePoint])
 
   return (
-    <Swiper
-    ref={SwiperRef}
-      spaceBetween={20}
-      slidesPerView={3}
-      navigation
-      pagination={{ clickable: true }}
-      modules={[Navigation, Pagination]}
-    >
-      {Object.keys(data[delay].date).map((elem, index)=>(
-        <SwiperSlide key={index}>
-          <div className='swiper'>
-            <h3>{elem}</h3>
-            <p>{data[delay].date[elem]}</p>
-          </div>
-        </SwiperSlide>
-      ))}
-    </Swiper>
+    <div>
+      <Swiper
+        ref={SwiperRef}
+        spaceBetween={20}
+        slidesPerView={3}
+        navigation
+        pagination={{ clickable: true }}
+        breakpoints={
+          {
+            0:{
+              slidesPerView: 1.5,
+              pagination: false,
+              navigation: false
+            },
+            768: {
+              slidesPerView: 3,
+              spaceBetween: 20
+            }
+          }
+        }
+        modules={[Navigation, Pagination]}
+      >
+        {Object.keys(data[delay].date).map((elem, index)=>(
+          <SwiperSlide key={index}>
+            <div className='swiper'>
+              <h3>{elem}</h3>
+              <p>{data[delay].date[elem]}</p>
+            </div>
+          </SwiperSlide>
+        ))}
+      </Swiper>
+    </div>
   );
 };
 

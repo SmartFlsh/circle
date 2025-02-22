@@ -8,7 +8,8 @@ interface PointProps {
   y: number;
   activePoint: [number, React.Dispatch<React.SetStateAction<number>>];
   active: boolean;
-  numPoints: number
+  numPoints: number;
+  name: string;
 }
 
 const Point: React.FC<PointProps> = ({
@@ -19,6 +20,7 @@ const Point: React.FC<PointProps> = ({
   activePoint,
   active,
   numPoints,
+  name
 }) => {
   const pointRef = useRef<HTMLDivElement | null>(null);
 
@@ -38,49 +40,48 @@ const Point: React.FC<PointProps> = ({
     const rotate = activePoint[0] * (360 / numPoints);
 
     if (active) {
-      gsap
-        .timeline()
-        .to(pointRef.current.children[0], {
-          rotate: rotate,
-          duration: 0,
-          ease: "power1.out",
-        })
-        .to(pointRef.current.children[0], {
-          opacity: active ? 1 : 0,
-          duration: 0.3,
-          ease: "power1.out",
-        });
-    } else {
-      gsap
-        .timeline()
-        .to(pointRef.current.children[0], {
-          opacity: active ? 1 : 0,
-          duration: 0.3,
-          ease: "power1.out",
-        })
-        .to(pointRef.current.children[0], {
-          rotate: rotate,
-          duration: 0,
-          ease: "power1.out",
-        });
-    }
-  }, [active, x]);
-
-  const mouseEnter = () => {
-    if (!pointRef.current) return;
-    const rotate = activePoint[0] * (360 / numPoints);
-    gsap
-      .timeline()
-      .to(pointRef.current.children[0], {
+      gsap.timeline()
+      .to(pointRef.current, {
         rotate: rotate,
-        duration: 0,
+        duration: 1,
         ease: "power1.out",
       })
-      .to(pointRef.current.children[0], {
+      .to(pointRef.current.children[1], {
         opacity: 1,
+        duration: .3,
+        ease: "power1.out",
+      })
+      gsap.to(pointRef.current.children[0], {
+        opacity: active ? 1 : 0,
         duration: 0.3,
         ease: "power1.out",
       });
+    } else {
+      gsap.to(pointRef.current.children[0], {
+        opacity: active ? 1 : 0,
+        duration: 0.3,
+        ease: "power1.out",
+      });
+      gsap.to(pointRef.current.children[1], {
+        opacity: 0,
+        duration: .3,
+        ease: "power1.out",
+      })
+      gsap.to(pointRef.current, {
+        rotate: rotate,
+        duration: 1,
+        ease: "power1.out",
+      });
+    }
+  }, [activePoint[0]]);
+
+  const mouseEnter = () => {
+    if (!pointRef.current) return;
+    gsap.to(pointRef.current.children[0], {
+      opacity: 1,
+      duration: 0.3,
+      ease: "power1.out",
+    });
 
     gsap.to(pointRef.current, {
       width: 50,
@@ -95,19 +96,11 @@ const Point: React.FC<PointProps> = ({
 
   const mouseLeave = () => {
     if (!pointRef.current || active) return;
-    const rotate = activePoint[0] * (360 / numPoints);
-    gsap
-      .timeline()
-      .to(pointRef.current.children[0], {
-        opacity: 0,
-        duration: 0.3,
-        ease: "power1.out",
-      })
-      .to(pointRef.current.children[0], {
-        rotate: rotate,
-        duration: 0,
-        ease: "power1.out",
-      });
+    gsap.to(pointRef.current.children[0], {
+      opacity: 0,
+      duration: 0.3,
+      ease: "power1.out",
+    });
 
     gsap.to(pointRef.current, {
       width: 10,
@@ -133,11 +126,10 @@ const Point: React.FC<PointProps> = ({
         }}
         onMouseEnter={mouseEnter}
         onMouseLeave={mouseLeave}
-        onClick={() => activePoint[1](index)} 
+        onClick={() => activePoint[1](index)}
       >
-        <div style={{ color: "black", writingMode: "horizontal-tb" }}>
-          {index + 1}
-        </div>
+        <div>{index + 1}</div>
+        <div className="test">{name}</div>
       </div>
     </>
   );
