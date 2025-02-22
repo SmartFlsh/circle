@@ -40,13 +40,13 @@ const App: FC<AppProps> = ({ numberPoint, DATA }) => {
 
   useEffect(() => {
     const handleResize = () => {
-      setIsMobile(window.innerWidth <= 768); // Проверяем, если ширина <= 768px, это мобильное устройство
+      setIsMobile(window.innerWidth <= 768); 
     };
-    handleResize(); // Выполняем проверку сразу при монтировании компонента
-    window.addEventListener("resize", handleResize); // Следим за изменениями размера окна
+    handleResize(); 
+    window.addEventListener("resize", handleResize); 
 
     return () => {
-      window.removeEventListener("resize", handleResize); // Убираем слушатель при размонтировании
+      window.removeEventListener("resize", handleResize); 
     };
   }, []);
 
